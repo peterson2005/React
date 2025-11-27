@@ -1,41 +1,46 @@
 
 
 import { useState } from 'react';
-
+import { InputAdd } from './components/InputAdd';
+import { TodoItem } from './components/TodoItem';
 
 
 export function App() {
-  const [value, setValue] = useState('');
+  
   const [list, setList] = useState([
-  {id: '1', label: 'Fazer café'},
-  {id: '2', label: 'Fazer almoço'},
-  {id: '3', label: 'Fazer janta'}
+  {id: '1', label: 'Fazer café', complete: false},
+  {id: '2', label: 'Fazer almoço', complete: false},
+  {id: '3', label: 'Fazer janta', complete: false}
 ]);
+
+
+  const handleAdd  = (value: string) => {
+    setList([
+          ...list, 
+          { id: (list.length + 1).toString(), label: value, complete: false, }
+        ]);
+  }
 
 
 
   return (
     <div>
-
-    <input  
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-    />
-    <button 
-  onClick={() => { 
-    setList([...list, { id: (list.length + 1).toString(), label: value }]);
-    setValue('');
-  }}
->
-      Adicionar
-    </button>
+      <InputAdd onAdd={handleAdd}/>
+    
 
     
-      <ol>
+      <ol> 
         {list.map((listItem) => (
-          <li key={listItem.id}>
-            {listItem.label}
-          </li>
+          <TodoItem
+            id={listItem.id}
+            label={listItem.label}
+            complete={listItem.complete}
+
+            onComplete={() => setList([
+                ...list.map(item => ({
+                ...item, complete: item.id === listItem.id ? true : item.complete}))])}
+            onRemove={() => setList([...list.filter(item => item.id !== listItem.id)])}
+          />
         ))}
       </ol>
     </div>
