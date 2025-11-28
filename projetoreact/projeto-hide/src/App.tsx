@@ -20,6 +20,22 @@ export function App() {
           { id: (list.length + 1).toString(), label: value, complete: false, }
         ]);
   }
+  const handleRemove  = (id: string) => {
+    setList([
+      ...list.filter(item => item.id !== id),
+    ])
+                
+  }
+  
+  const handleComplete  = (id: string) => {
+    setList([
+      ...list.map(item => ({
+        ...item, complete: item.id === listItem.id ? true : item.complete
+      }))
+    ]);
+  }
+}
+
 
 
 
@@ -36,16 +52,14 @@ export function App() {
             label={listItem.label}
             complete={listItem.complete}
 
-            onComplete={() => setList([
-                ...list.map(item => ({
-                ...item, complete: item.id === listItem.id ? true : item.complete}))])}
-            onRemove={() => setList([...list.filter(item => item.id !== listItem.id)])}
+            onRemove={() => handleRemove(listItem.id)}
+            onComplete={() => handleComplete(listItem.id)}
           />
         ))}
       </ol>
     </div>
   )
-}
+
 
 
 
