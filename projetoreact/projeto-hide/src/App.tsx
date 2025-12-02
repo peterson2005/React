@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { InputAdd } from './components/InputAdd';
 import { TodoItem } from './components/TodoItem';
+import { List } from './List.tsx';
 
 
 export function App() {
@@ -30,11 +31,10 @@ export function App() {
   const handleComplete  = (id: string) => {
     setList([
       ...list.map(item => ({
-        ...item, complete: item.id === listItem.id ? true : item.complete
+        ...item, complete: item.id === id? true: item.complete
       }))
     ]);
   }
-}
 
 
 
@@ -43,11 +43,11 @@ export function App() {
     <div>
       <InputAdd onAdd={handleAdd}/>
     
-
-    
-      <ol> 
+      <List>
         {list.map((listItem) => (
           <TodoItem
+            key={listItem.id}
+
             id={listItem.id}
             label={listItem.label}
             complete={listItem.complete}
@@ -56,10 +56,10 @@ export function App() {
             onComplete={() => handleComplete(listItem.id)}
           />
         ))}
-      </ol>
+      </List>
     </div>
   )
-
+}
 
 
 
