@@ -1,10 +1,21 @@
 
 
 import { useState } from 'react';
+
+import { TodoAPI } from './shared/api/TodoAPI.ts';
 import { InputAdd } from './components/InputAdd';
 import { TodoItem } from './components/TodoItem';
 import { List } from './List.tsx';
 
+
+TodoAPI.getAll().then(data => console.log('1', data));
+TodoAPI.create({label: 'Fazer almoço', complete: false });
+TodoAPI.create({label: 'Fazer lanche', complete: false });
+TodoAPI.getAll().then(data => console.log('2', data));
+TodoAPI.updateById('1', { label: 'Fazer janta', complete: false});
+TodoAPI.getAll().then(data => console.log('3', data));
+TodoAPI.deleteById('1');
+TodoAPI.getAll().then(data => console.log('3', data));
 
 export function App() {
   
