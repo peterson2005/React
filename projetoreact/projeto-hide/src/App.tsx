@@ -1,6 +1,6 @@
 
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { TodoAPI } from './shared/api/TodoAPI.ts';
 import { InputAdd } from './components/InputAdd';
@@ -9,13 +9,17 @@ import { List } from './List.tsx';
 
 
 TodoAPI.getAll().then(data => console.log('1', data));
+
 TodoAPI.create({label: 'Fazer almoço', complete: false });
 TodoAPI.create({label: 'Fazer lanche', complete: false });
+
 TodoAPI.getAll().then(data => console.log('2', data));
+
 TodoAPI.updateById('1', { label: 'Fazer janta', complete: false});
+
 TodoAPI.getAll().then(data => console.log('3', data));
 TodoAPI.deleteById('1');
-TodoAPI.getAll().then(data => console.log('3', data));
+TodoAPI.getAll().then(data => console.log('4', data));
 
 export function App() {
   
@@ -25,12 +29,20 @@ export function App() {
   {id: '3', label: 'Fazer janta', complete: false}
 ]);
 
+  useEffect(() => {
+    TodoAPI.getAll()
+    .then(data => setList(data));
+  }, []);
+
+
 
   const handleAdd  = (value: string) => {
-    setList([
-          ...list, 
-          { id: (list.length + 1).toString(), label: value, complete: false, }
-        ]);
+    TodoAPI.create({ label: value, complete: false})
+    .then(data => {
+      setList([...list,data]);
+    })
+
+    
   }
   const handleRemove  = (id: string) => {
     setList([
