@@ -1,0 +1,5 @@
+function FunctionalComponent() {
+    return (
+        
+    )
+}
