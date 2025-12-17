@@ -1,15 +1,9 @@
-
-
-
-
-
-
-
-
-
-
 import { useState } from 'react';
-export function App() {
+import Card from './Card';
+import './styles.css'
+
+export const App = () => {
+
   const [count, setCount] = useState(0);
   let count2 = 0;
   setInterval(() => {
@@ -21,6 +15,7 @@ export function App() {
   return (
 
     <div>
+      <Card titulo="Teste" descricao={'4'}  />
       <button onClick={() => setCount(count + 1)}>
         {count}
       </button>
